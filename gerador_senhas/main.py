@@ -12,6 +12,7 @@ class GeraSenha():
     self.ncaracteres = 0
     self.nnumeros = 0
     self.nsimbolos = 0
+    self.cont = True
 
   @staticmethod
   def mensagem_intro():
@@ -32,9 +33,31 @@ class GeraSenha():
     return [x for x in list(string.printable[62:94]) if x not in ['ç','´','`','^',',','.','"',"'",";"] ]
 
   def inputs(self):
-    self.ncaracteres = abs(int(input("Digite o número de Caracteres de sua senha:  ")))
-    self.ndigitos = abs(int(input("Digite a quantidade de Números em sua senha:  ")))
-    self.nsimbolos=abs(int(input("Digite quantos Simboloas deseja em sua senha:  ")))
+    mensagem = """\n ERRO: Somente numeros inteiros são aceitos. Por favor, tente novamente!
+     ou Pressione <CTRL + C> para interromper a execução\n"""
+    while True:  
+      try:
+        self.ncaracteres = abs(int(input("Digite o número de Letras em sua senha:  ")))
+      except Exception:
+        print(mensagem)
+      else:
+        break
+
+    while True:
+      try:
+        self.ndigitos = abs(int(input("Digite a quantidade de Números em sua senha:  ")))
+      except Exception:
+        print(mensagem)
+      else:
+        break
+    
+    while True:
+      try:
+        self.nsimbolos=abs(int(input("Digite quantos Simboloas deseja em sua senha:  ")))
+      except Exception:
+        print(mensagem)
+      else:
+        break
 
   def gerar(self):
     self.mensagem_intro()
@@ -64,4 +87,11 @@ class GeraSenha():
 
 if __name__ == "__main__": 
   senha = GeraSenha()
-  senha.gerar()
+  while senha.cont:
+    senha.gerar()
+    confirma = input("Deseja gerar outra senha? [s/n]")
+    if confirma.strip().lower() in ['s','im','sim','sm','ssim','siim',"sin",'y','yes']:
+      pass
+    else:
+      print("Até mais!")
+      break
